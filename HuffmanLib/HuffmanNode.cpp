@@ -18,15 +18,15 @@ using std::endl;
 HuffmanNode::HuffmanNode(char c, int i) { // default constructor
         letter = c;
         freq = i;
-        std::cout << "creating a node";
+        std::cout << "creating a node" << endl;
 }
 
-HuffmanNode::HuffmanNode(shared_ptr<HuffmanNode> l, shared_ptr<HuffmanNode> r) { // parent constructor
+HuffmanNode::HuffmanNode(const HuffmanNode& l, const HuffmanNode& r) { // parent constructor
     letter = '\0';
-    freq = l -> freq + r ->freq;
-    left = std::move(l);
-    right = std::move(r);
-    std::cout << "creating a parent node";
+    freq = l.freq + r.freq;
+    left = make_shared<HuffmanNode>(l);
+    right = make_shared<HuffmanNode>(r); 
+    std::cout << "creating a parent node" << endl;
 }
 
 HuffmanNode::HuffmanNode(const HuffmanNode & rhs) { // copy constructor
@@ -34,6 +34,7 @@ HuffmanNode::HuffmanNode(const HuffmanNode & rhs) { // copy constructor
     letter = rhs.letter;
     left = rhs.left;
     right = rhs.right;
+    //std::cout << "copying a node" << endl;
 }
 
 HuffmanNode::HuffmanNode(HuffmanNode && rhs) { // move constructor
@@ -44,6 +45,7 @@ HuffmanNode::HuffmanNode(HuffmanNode && rhs) { // move constructor
 
     rhs.freq = 0;
     rhs.letter = '\0';
+    //std::cout << "moving a node" << endl;
 }
 
 HuffmanNode & HuffmanNode::operator=(const HuffmanNode & rhs) { // copy assignment operator
@@ -56,6 +58,7 @@ HuffmanNode & HuffmanNode::operator=(const HuffmanNode & rhs) { // copy assignme
         left = rhs.left;
         right = rhs.right;
     }
+    //std::cout << "copying a node" << endl;
     return *this;
 }
 
@@ -77,6 +80,7 @@ HuffmanNode & HuffmanNode::operator=(HuffmanNode && rhs) { // move assignment op
         rhs.left = nullptr;
         rhs.right = nullptr;
         }
+    //std::cout << "moving a node" << endl;
     return *this;
 }
 
@@ -85,7 +89,7 @@ HuffmanNode::~HuffmanNode() { // destructor
     letter = '\0';
     left = nullptr;
     right = nullptr;
-    cout << "Destroying a node" << endl;
+    //cout << "Destroying a node" << endl;
 }
 
 bool HuffmanNode::operator<(const HuffmanNode & rhs) const { // '<' operator overload

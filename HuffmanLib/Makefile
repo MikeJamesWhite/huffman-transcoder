@@ -2,9 +2,6 @@ CC=g++
 TARGET=libhuffman.so
 FLAGS=-fPIC -shared -std=c++11
 
-default:
-	g++ -o libhuffman.so HuffmanNode.cpp HuffmanTree.cpp huffman.h $(FLAGS)
-
 $(TARGET): HuffmanNode.o HuffmanTree.o
 	$(CC) -o $(TARGET) HuffmanNode.o HuffmanTree.o $(FLAGS)
 

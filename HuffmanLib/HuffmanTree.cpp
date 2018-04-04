@@ -29,16 +29,21 @@ void HuffmanTree::letterFreq(string filepath) {
     std::ifstream in = std::ifstream(filepath);
     string line;
     while (std::getline(in, line)) {
-        std::stringstream s = std::stringstream(line);
-        char c;
-        while (!s.eof()) {
-            s >> c;
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line[i];
             if (frequencies.find(c) != frequencies.end()) {
                 frequencies[c]++;
             }
             else {
                 frequencies[c] = 1;
             }
+        }
+        if (frequencies.find('\n') != frequencies.end()) {
+            frequencies['\n']++;
+        }
+        else {
+            frequencies['\n'] = 1;
         }
     }
     std::cout << "Calculated frequencies!" << std::endl;
@@ -51,14 +56,14 @@ void HuffmanTree::buildTree() {
     for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
         HuffmanNode n = HuffmanNode(iter-> first, iter -> second);
         nodes.push(n);
+        std::cout << "pushing character '" << iter -> first << "' with value " << std::to_string(iter -> second) << std::endl;
     }
 
     // pop lowest two, combine and repush until only one node left
     while (nodes.size() > 1) {
-        shared_ptr<HuffmanNode> left, right;
-        left = make_shared<HuffmanNode>(nodes.top());
+        HuffmanNode left = nodes.top();
         nodes.pop();
-        right = make_shared<HuffmanNode>(nodes.top());
+        HuffmanNode right = nodes.top();
         nodes.pop();
         HuffmanNode parent = HuffmanNode(left, right);
         nodes.push(parent);
@@ -69,14 +74,9 @@ void HuffmanTree::buildTree() {
     std::cout << "Built the tree!" << std::endl;
 }
 
-void HuffmanTree::encode(string inputFile, string outputFile) {
-
-}
-
 HuffmanTree::HuffmanTree(string inputFile, string outputFile) { // default constructor
     letterFreq(inputFile);
     buildTree();
-    encode(inputFile, outputFile);
 }
 
 // copy constructor
