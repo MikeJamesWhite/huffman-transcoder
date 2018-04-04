@@ -24,79 +24,70 @@ class Compare { // comparator for priority queue
         }
 };
 
-class HuffmanTree {
-
-    private:
-        shared_ptr<HuffmanNode> root;
-        unordered_map<char, int> frequencies;
-
-        void letterFreq(string filepath) {
-            frequencies.clear();
-            std::ifstream in = std::ifstream(filepath);
-            string line;
-            while (std::getline(in, line)) {
-                std::stringstream s = std::stringstream(line);
-                char c;
-                while (!s.eof()) {
-                    s >> c;
-                    if (frequencies.find(c) != frequencies.end()) {
-                        frequencies[c]++;
-                    }
-                    else {
-                        frequencies[c] = 1;
-                    }
-                }
+void HuffmanTree::letterFreq(string filepath) {
+    frequencies.clear();
+    std::ifstream in = std::ifstream(filepath);
+    string line;
+    while (std::getline(in, line)) {
+        std::stringstream s = std::stringstream(line);
+        char c;
+        while (!s.eof()) {
+            s >> c;
+            if (frequencies.find(c) != frequencies.end()) {
+                frequencies[c]++;
             }
-            std::cout << "Calculated frequencies!" << std::endl;
-        }
-
-        void buildTree() {
-            std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, Compare> nodes;
-
-            // push initial nodes onto the queue
-            for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
-                HuffmanNode n = HuffmanNode(iter-> first, iter -> second);
-                nodes.push(n);
+            else {
+                frequencies[c] = 1;
             }
-
-            // pop lowest two, combine and repush until only one node left
-            while (nodes.size() > 1) {
-                shared_ptr<HuffmanNode> left, right;
-                left = make_shared<HuffmanNode>(nodes.top());
-                nodes.pop();
-                right = make_shared<HuffmanNode>(nodes.top());
-                nodes.pop();
-                HuffmanNode parent = HuffmanNode(left, right);
-                nodes.push(parent);
-            }
-
-            // assign the last node to the root
-            root = make_shared<HuffmanNode>(nodes.top());
-            std::cout << "Built the tree!" << std::endl;
         }
+    }
+    std::cout << "Calculated frequencies!" << std::endl;
+}
 
-        void encode(string inputFile, string outputFile) {
+void HuffmanTree::buildTree() {
+    std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, Compare> nodes;
 
-        }
+    // push initial nodes onto the queue
+    for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
+        HuffmanNode n = HuffmanNode(iter-> first, iter -> second);
+        nodes.push(n);
+    }
 
-    public:
-        HuffmanTree(string inputFile, string outputFile) { // default constructor
-            letterFreq(inputFile);
-            buildTree();
-            encode(inputFile, outputFile);
-        }
+    // pop lowest two, combine and repush until only one node left
+    while (nodes.size() > 1) {
+        shared_ptr<HuffmanNode> left, right;
+        left = make_shared<HuffmanNode>(nodes.top());
+        nodes.pop();
+        right = make_shared<HuffmanNode>(nodes.top());
+        nodes.pop();
+        HuffmanNode parent = HuffmanNode(left, right);
+        nodes.push(parent);
+    }
 
-        // copy constructor
+    // assign the last node to the root
+    root = make_shared<HuffmanNode>(nodes.top());
+    std::cout << "Built the tree!" << std::endl;
+}
 
-        // move assignment constructor
+void HuffmanTree::encode(string inputFile, string outputFile) {
 
-        // copy assignment operator
+}
 
-        // move assignment operator
+HuffmanTree::HuffmanTree(string inputFile, string outputFile) { // default constructor
+    letterFreq(inputFile);
+    buildTree();
+    encode(inputFile, outputFile);
+}
 
-        ~HuffmanTree() { // destructor
-            root = nullptr;
-            std::cout << "Set root to null." << std::endl;
-        }
+// copy constructor
 
-};
+// move assignment constructor
+
+// copy assignment operator
+
+// move assignment operator
+
+HuffmanTree::~HuffmanTree() { // destructor
+    root = nullptr;
+    std::cout << "Set root to null." << std::endl;
+}

@@ -22,6 +22,6 @@ int main(int argc, char * argv []) {
     string output = string(argv[2]);
     cout << "Input file: " << input << endl;
     cout << "Output file: " << output << endl;
-    
+
     HuffmanTree t = HuffmanTree(input, output);
 }
