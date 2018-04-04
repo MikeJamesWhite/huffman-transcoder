@@ -8,7 +8,13 @@
  */
 
 #include "huffman.h"
+#include <iostream>
 
-int main() {
+using std::cout;
+using std::endl;
+
+int main(int argc, char * argv []) {
+    cout << "Input file: " << argv[1] << endl;
+    cout << "Output file: " << argv[2] << endl;
 
 }
