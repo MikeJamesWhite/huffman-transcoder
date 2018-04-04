@@ -19,6 +19,8 @@ namespace WHTMIC023 {
         public:
             HuffmanNode(char c, int i);
 
+            HuffmanNode(std::shared_ptr<HuffmanNode> l, std::shared_ptr<HuffmanNode> r);
+
             HuffmanNode(const HuffmanNode & rhs);
 
             HuffmanNode(HuffmanNode && rhs);
@@ -41,8 +43,13 @@ namespace WHTMIC023 {
         
             void buildTree (); // builds the huffman tree
 
+            void encode(std::string inputFile, std::string outputFile); // write out the encoded
+        
         public:
-            
+            HuffmanTree(std::string inputFile, std::string outputFile);
+
+            ~HuffmanTree();
+
     };
 }
 

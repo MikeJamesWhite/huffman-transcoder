@@ -10,17 +10,30 @@
 #include "huffman.h"
 
 using namespace WHTMIC023;
+using std::shared_ptr;
+using std::make_shared;
+using std::cout;
+using std::endl;
 
 class HuffmanNode {
     private:
         int freq;
         char letter;
-        std::shared_ptr<HuffmanNode> left, right;
+        shared_ptr<HuffmanNode> left, right;
     
     public:
         HuffmanNode(char c, int i) { // default constructor
             letter = c;
             freq = i;
+            std::cout << "creating a node";
+        }
+
+        HuffmanNode(shared_ptr<HuffmanNode> l, shared_ptr<HuffmanNode> r) { // parent constructor
+            letter = '\0';
+            freq = l -> freq + r ->freq;
+            left = std::move(l);
+            right = std::move(r);
+            std::cout << "creating a parent node";
         }
 
         HuffmanNode(const HuffmanNode & rhs) { // copy constructor
@@ -37,7 +50,7 @@ class HuffmanNode {
             right = std::move(rhs.right);
 
             rhs.freq = 0;
-            rhs.letter = NULL;
+            rhs.letter = '\0';
         }
 
         HuffmanNode & operator=(const HuffmanNode & rhs) { // copy assignment operator
@@ -67,7 +80,7 @@ class HuffmanNode {
 
                 // release resources from rhs
                 rhs.freq = 0;
-                rhs.letter = NULL;
+                rhs.letter = '\0';
                 rhs.left = nullptr;
                 rhs.right = nullptr;
             }
@@ -76,9 +89,10 @@ class HuffmanNode {
 
         ~HuffmanNode() { // destructor
             freq = 0;
-            letter = NULL;
+            letter = '\0';
             left = nullptr;
             right = nullptr;
+            cout << "Destroying a node" << endl;
         }
 
         bool operator<(const HuffmanNode & rhs) const { // '<' operator overload

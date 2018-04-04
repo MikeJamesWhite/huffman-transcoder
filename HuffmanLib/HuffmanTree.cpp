@@ -10,20 +10,25 @@
 #include "huffman.h"
 #include <queue>
 
-using namespace WHTMIC023;
+using WHTMIC023::HuffmanTree;
+using WHTMIC023::HuffmanNode;
 using std::string;
+using std::shared_ptr;
+using std::make_shared;
+using std::unordered_map;
 
 class Compare { // comparator for priority queue
-    bool operator()(const HuffmanNode & a, const HuffmanNode & b) {
-        return (a < b);
-    }
+    public:
+        bool operator()(const HuffmanNode & a, const HuffmanNode & b) {
+            return (a < b);
+        }
 };
 
 class HuffmanTree {
 
     private:
-        std::shared_ptr<HuffmanNode> root;
-        std::unordered_map<char, int> frequencies;
+        shared_ptr<HuffmanNode> root;
+        unordered_map<char, int> frequencies;
 
         void letterFreq(string filepath) {
             frequencies.clear();
@@ -50,23 +55,35 @@ class HuffmanTree {
 
             // push initial nodes onto the queue
             for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
-                std::shared_ptr<HuffmanNode> n = std::make_shared<HuffmanNode>(iter-> first, iter -> second);
-                nodes.push(*n);
+                HuffmanNode n = HuffmanNode(iter-> first, iter -> second);
+                nodes.push(n);
             }
 
             // pop lowest two, combine and repush until only one node left
-            while (nodes.size > 1) {
-                
+            while (nodes.size() > 1) {
+                shared_ptr<HuffmanNode> left, right;
+                left = make_shared<HuffmanNode>(nodes.top());
+                nodes.pop();
+                right = make_shared<HuffmanNode>(nodes.top());
+                nodes.pop();
+                HuffmanNode parent = HuffmanNode(left, right);
+                nodes.push(parent);
             }
 
             // assign the last node to the root
-            root = (nodes.top());
+            root = make_shared<HuffmanNode>(nodes.top());
+            std::cout << "Built the tree!" << std::endl;
+        }
+
+        void encode(string inputFile, string outputFile) {
+
         }
 
     public:
-        HuffmanTree(string filepath) { // default constructor
-            letterFreq(filepath);
+        HuffmanTree(string inputFile, string outputFile) { // default constructor
+            letterFreq(inputFile);
             buildTree();
+            encode(inputFile, outputFile);
         }
 
         // copy constructor
@@ -78,7 +95,8 @@ class HuffmanTree {
         // move assignment operator
 
         ~HuffmanTree() { // destructor
-
+            root = nullptr;
+            std::cout << "Set root to null." << std::endl;
         }
 
 };

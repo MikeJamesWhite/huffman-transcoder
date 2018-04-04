@@ -10,11 +10,18 @@
 #include "huffman.h"
 #include <iostream>
 
+using namespace WHTMIC023;
+
 using std::cout;
 using std::endl;
+using std::string;
+using std::to_string;
 
 int main(int argc, char * argv []) {
-    cout << "Input file: " << argv[1] << endl;
-    cout << "Output file: " << argv[2] << endl;
-
+    string input = string(argv[1]);
+    string output = string(argv[2]);
+    cout << "Input file: " << input << endl;
+    cout << "Output file: " << output << endl;
+    
+    HuffmanTree t = HuffmanTree(input, output);
 }
