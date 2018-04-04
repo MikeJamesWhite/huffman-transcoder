@@ -46,8 +46,21 @@ class HuffmanTree {
         }
 
         void buildTree() {
-            std::priority_queue<HuffmanNode, Compare> nodes();
-            
+            std::priority_queue<HuffmanNode, std::vector<HuffmanNode>, Compare> nodes;
+
+            // push initial nodes onto the queue
+            for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
+                std::shared_ptr<HuffmanNode> n = std::make_shared<HuffmanNode>(iter-> first, iter -> second);
+                nodes.push(*n);
+            }
+
+            // pop lowest two, combine and repush until only one node left
+            while (nodes.size > 1) {
+                
+            }
+
+            // assign the last node to the root
+            root = (nodes.top());
         }
 
     public:

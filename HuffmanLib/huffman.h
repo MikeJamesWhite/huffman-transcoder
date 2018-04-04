@@ -14,8 +14,21 @@ namespace WHTMIC023 {
         private:
             char letter;
             int freq;
+            std::shared_ptr<HuffmanNode> left, right;
         
         public:
+            HuffmanNode(char c, int i);
+
+            HuffmanNode(const HuffmanNode & rhs);
+
+            HuffmanNode(HuffmanNode && rhs);
+
+            HuffmanNode & operator=(const HuffmanNode & rhs);
+
+            HuffmanNode & operator=(HuffmanNode&& rhs);
+
+            ~HuffmanNode();
+
             bool operator<(const HuffmanNode& other) const;
     };
 
@@ -29,7 +42,7 @@ namespace WHTMIC023 {
             void buildTree (); // builds the huffman tree
 
         public:
-
+            
     };
 }
 

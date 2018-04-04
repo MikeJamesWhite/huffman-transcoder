@@ -23,21 +23,66 @@ class HuffmanNode {
             freq = i;
         }
 
-        // copy constructor
+        HuffmanNode(const HuffmanNode & rhs) { // copy constructor
+            freq = rhs.freq;
+            letter = rhs.letter;
+            left = rhs.left;
+            right = rhs.right;
+        }
 
-        // move assignment constructor
+        HuffmanNode(HuffmanNode && rhs) { // move constructor
+            freq = rhs.freq;
+            letter = rhs.letter;
+            left = std::move(rhs.left);
+            right = std::move(rhs.right);
 
-        // copy assignment operator
+            rhs.freq = 0;
+            rhs.letter = NULL;
+        }
 
-        // move assignment operator
+        HuffmanNode & operator=(const HuffmanNode & rhs) { // copy assignment operator
+            if (this != &rhs) {
+                left = nullptr;
+                right = nullptr;
+
+                freq = rhs.freq;
+                letter = rhs.letter;
+                left = rhs.left;
+                right = rhs.right;
+            }
+            return *this;
+        }
+
+        HuffmanNode & operator=(HuffmanNode && rhs) { // move assignment operator
+            if (this != &rhs) {
+                // release current resources
+                left = nullptr;
+                right = nullptr;
+
+                // move rhs resources
+                freq = rhs.freq;
+                letter = rhs.letter;
+                left = rhs.left;
+                right = rhs.right;
+
+                // release resources from rhs
+                rhs.freq = 0;
+                rhs.letter = NULL;
+                rhs.left = nullptr;
+                rhs.right = nullptr;
+            }
+            return *this;
+        }
 
         ~HuffmanNode() { // destructor
+            freq = 0;
+            letter = NULL;
             left = nullptr;
             right = nullptr;
         }
 
-        bool operator<(const HuffmanNode & other) const { // '<' operator overload
-            if (other.freq < freq) {
+        bool operator<(const HuffmanNode & rhs) const { // '<' operator overload
+            if (rhs.freq < freq) {
                 return false;
             }
             else {
