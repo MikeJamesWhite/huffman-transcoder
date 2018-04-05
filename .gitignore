@@ -4,3 +4,5 @@ huffencode
 .vscode/
 testinput.txt
 testoutput.txt
+decoded.txt
+testoutput.hdr

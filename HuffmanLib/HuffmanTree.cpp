@@ -56,7 +56,6 @@ void HuffmanTree::buildTree() {
     for (auto iter = frequencies.begin(); iter != frequencies.end(); iter++) {
         HuffmanNode n = HuffmanNode(iter-> first, iter -> second);
         nodes.push(n);
-        std::cout << "pushing character '" << iter -> first << "' with value " << std::to_string(iter -> second) << std::endl;
     }
 
     // pop lowest two, combine and repush until only one node left
@@ -74,8 +73,8 @@ void HuffmanTree::buildTree() {
     std::cout << "Built the tree!" << std::endl;
 }
 
-HuffmanTree::HuffmanTree(string inputFile, string outputFile) { // default constructor
-    letterFreq(inputFile);
+HuffmanTree::HuffmanTree(string filepath) { // default constructor
+    letterFreq(filepath + ".txt");
     buildTree();
 }
 
@@ -89,5 +88,5 @@ HuffmanTree::HuffmanTree(string inputFile, string outputFile) { // default const
 
 HuffmanTree::~HuffmanTree() { // destructor
     root = nullptr;
-    std::cout << "Set root to null." << std::endl;
+    std::cout << "Destroying tree." << std::endl;
 }

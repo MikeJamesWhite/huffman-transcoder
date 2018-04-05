@@ -18,7 +18,7 @@ using std::endl;
 HuffmanNode::HuffmanNode(char c, int i) { // default constructor
         letter = c;
         freq = i;
-        std::cout << "creating a node" << endl;
+        //std::cout << "creating a node" << endl;
 }
 
 HuffmanNode::HuffmanNode(const HuffmanNode& l, const HuffmanNode& r) { // parent constructor
@@ -26,7 +26,7 @@ HuffmanNode::HuffmanNode(const HuffmanNode& l, const HuffmanNode& r) { // parent
     freq = l.freq + r.freq;
     left = make_shared<HuffmanNode>(l);
     right = make_shared<HuffmanNode>(r); 
-    std::cout << "creating a parent node" << endl;
+    //std::cout << "creating a parent node" << endl;
 }
 
 HuffmanNode::HuffmanNode(const HuffmanNode & rhs) { // copy constructor
@@ -94,9 +94,9 @@ HuffmanNode::~HuffmanNode() { // destructor
 
 bool HuffmanNode::operator<(const HuffmanNode & rhs) const { // '<' operator overload
     if (rhs.freq < freq) {
-        return false;
+        return true;
     }
     else {
-        return true;
+        return false;
     }
 }

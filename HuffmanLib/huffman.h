@@ -32,11 +32,26 @@ namespace WHTMIC023 {
             ~HuffmanNode();
 
             bool operator<(const HuffmanNode& other) const;
+
+            char getLetter() {
+                return letter;
+            }
+
+            int getFrequency() {
+                return freq;
+            }
+
+            const std::shared_ptr<HuffmanNode> getLeft() {
+                return left;
+            }
+            
+            const std::shared_ptr<HuffmanNode> getRight() {
+                return right;
+            }
     };
 
     class HuffmanTree {
         private:
-            std::shared_ptr<HuffmanNode> root;
             std::unordered_map<char, int> frequencies;
 
             void letterFreq (std::string filepath); // calculates the frequency of letters in a given file
@@ -44,24 +59,31 @@ namespace WHTMIC023 {
             void buildTree (); // builds the huffman tree
         
         public:
-            HuffmanTree(std::string inputFile, std::string outputFile);
+            std::shared_ptr<HuffmanNode> root;
+
+            HuffmanTree(std::string filepath);
 
             ~HuffmanTree();
 
     };
 
-    class HuffmanEncoder {
+    class HuffmanTranscoder {
         private:
             std::unordered_map<char, std::string> codeTable;
+            std::unordered_map<std::string, char> reverseTable;
+
+            void buildCodeTable(std::string input); // builds the code table using a huffman tree
+
+            void buildCodeTable(HuffmanNode n, std::string bitstring); // builds the code table using a huffman tree
+
+            void ImportCodeTable(std::string filename); // imports the code table from a header file
 
         public:
+            HuffmanTranscoder() {};
+
             void encode(std::string inputFile, std::string outputFile); // write out the encoded file as well as a header file which contains the code table
 
-            void buildCodeTable(std::string input, std::string output); // builds the code table using a huffman tree
-
-            void buildCodeTable(std::string filename); // builds the code table from a header file
-
-            void decode(std::string encodedFile, std::string headerFile, std::string outputFile); // decodes a file using the code table
+            void decode(std::string encodedFile, std::string outputFile); // decodes a file using the code table
     };
 }
 

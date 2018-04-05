@@ -17,4 +17,4 @@ clean:
 
 run: $(TARGET)
 	export LD_LIBRARY_PATH=HuffmanLib/; \
-	./huffencode testinput.txt testoutput.txt
+	./huffencode testinput testoutput decoded
