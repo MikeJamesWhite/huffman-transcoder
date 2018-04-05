@@ -17,4 +17,20 @@ clean:
 
 run: $(TARGET)
 	export LD_LIBRARY_PATH=HuffmanLib/; \
-	./huffencode testinput testoutput decoded
+	./huffencode testinput.txt testoutput
+
+encode: $(TARGET)
+	export LD_LIBRARY_PATH=HuffmanLib/; \
+	./huffencode testinput.txt testoutput -e
+
+decode: $(TARGET)
+	export LD_LIBRARY_PATH=HuffmanLib/; \
+	./huffencode testoutput decoded.txt -d
+
+bitEncode: $(TARGET)
+	export LD_LIBRARY_PATH=HuffmanLib/; \
+	./huffencode testinput.txt testoutput -be
+
+bitDecode: $(TARGET)
+	export LD_LIBRARY_PATH=HuffmanLib/; \
+	./huffencode testoutput decoded.txt -bd

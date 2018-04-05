@@ -31,7 +31,7 @@ namespace WHTMIC023 {
 
             ~HuffmanNode();
 
-            bool operator<(const HuffmanNode& other) const;
+            bool operator>(const HuffmanNode& other) const;
 
             char getLetter() {
                 return letter;
@@ -83,7 +83,11 @@ namespace WHTMIC023 {
 
             void encode(std::string inputFile, std::string outputFile); // write out the encoded file as well as a header file which contains the code table
 
-            void decode(std::string encodedFile, std::string outputFile); // decodes a file using the code table
+            void decode(std::string encodedFile, std::string outputFile); // decode a file using the code table
+
+            void bitEncode(std::string inputFile, std::string outputFile); // write out an encoded binary file as well as a header file
+
+            void bitDecode(std::string encodedFile, std::string outputFile); // decode a binary file
     };
 }
 

@@ -20,7 +20,7 @@ using std::unordered_map;
 class Compare { // comparator for priority queue
     public:
         bool operator()(const HuffmanNode & a, const HuffmanNode & b) {
-            return (a < b);
+            return (a > b);
         }
 };
 
@@ -74,7 +74,7 @@ void HuffmanTree::buildTree() {
 }
 
 HuffmanTree::HuffmanTree(string filepath) { // default constructor
-    letterFreq(filepath + ".txt");
+    letterFreq(filepath);
     buildTree();
 }
 
