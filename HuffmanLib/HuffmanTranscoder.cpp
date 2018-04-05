@@ -107,10 +107,13 @@ void HuffmanTranscoder::bitEncode(string inputFile, string outputFile) {
             currentBit++;
         }
     }
+    
+    if (currentBit != 0)
+        buffer[currentByte] = ch;
 
     // write encoded file
     std::ofstream out = std::ofstream(outputFile, std::ios_base::binary);
-    out << charCount;
+    out << input.length();
     for (int i = 0; i < size; i++) {
         out << buffer[i];
     }
@@ -141,23 +144,24 @@ void HuffmanTranscoder::bitDecode(string encodedFile, string outputFile) {
 
     // read input
     std::ifstream in = std::ifstream(encodedFile, std::ios_base::binary);
-    int numChars;
-    in >> numChars;
-    cout << "Number of characters to read: " << std::to_string(numChars) << endl;
-    vector<char> input;
+    int numBits;
+    in >> numBits;
+    int numBytes = numBits / 8;
+    if (numBits % 8 > 0)
+        numBytes++;
+    cout << "Number of bits to read: " << std::to_string(numBits) << endl;
+    cout << "Number of bytes to read: " << std::to_string(numBytes) << endl;
+    char input [numBytes];
 
-    while (!in.eof()) {
-        char c;
-        in >> c;
-        input.push_back(c);
-    }
+    in.read(input, numBytes);
     in.close();
 
     // unpack bits
     string output = "";
     int currentByte = 0;
     int currentBit = 0;
-    for (int i = 0; i < numChars; i++) {
+    int bitsRead = 0;
+    while (bitsRead < numBits) {
         string current = "";
         while (reverseTable.find(current) == reverseTable.end()) {
             if (input[currentByte] & 1 << (7 - currentBit)) {
@@ -174,6 +178,7 @@ void HuffmanTranscoder::bitDecode(string encodedFile, string outputFile) {
             else {
                 currentBit++;
             }
+            bitsRead++;
         }
         cout << reverseTable[current] << ": " << current << endl;
         output += reverseTable[current];
