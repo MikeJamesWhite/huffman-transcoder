@@ -11,8 +11,14 @@ driver.o: driver.cpp
 	make -C ./HuffmanLib/
 	$(CC) -c -o driver.o driver.cpp $(FLAGS)
 
+tests: tests.cpp
+	make -C ./HuffmanLib/
+	$(CC) -o testRunner tests.cpp $(FLAGS)
+	export LD_LIBRARY_PATH=HuffmanLib/; \
+	./testRunner -s
+
 clean:
-	rm -f *.o ./$(TARGET)
+	rm -f *.o ./$(TARGET) ./testRunner
 	make -C ./HuffmanLib clean
 
 run: $(TARGET)

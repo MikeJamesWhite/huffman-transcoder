@@ -65,6 +65,9 @@ namespace WHTMIC023 {
 
             ~HuffmanTree();
 
+            std::unordered_map<char, int> getFrequencies () {
+                return frequencies;
+            }
     };
 
     class HuffmanTranscoder {
@@ -72,14 +75,14 @@ namespace WHTMIC023 {
             std::unordered_map<char, std::string> codeTable;
             std::unordered_map<std::string, char> reverseTable;
 
-            void buildCodeTable(std::string input); // builds the code table using a huffman tree
-
             void buildCodeTable(HuffmanNode n, std::string bitstring); // builds the code table using a huffman tree
-
-            void ImportCodeTable(std::string filename); // imports the code table from a header file
 
         public:
             HuffmanTranscoder() {};
+
+            void buildCodeTable(std::string input); // builds the code table using a huffman tree
+
+            void ImportCodeTable(std::string filename); // imports the code table from a header file
 
             void encode(std::string inputFile, std::string outputFile); // write out the encoded file as well as a header file which contains the code table
 
@@ -88,6 +91,15 @@ namespace WHTMIC023 {
             void bitEncode(std::string inputFile, std::string outputFile); // write out an encoded binary file as well as a header file
 
             void bitDecode(std::string encodedFile, std::string outputFile); // decode a binary file
+
+            std::unordered_map<char, std::string> getCodeTable() {
+                return codeTable;
+            }
+
+            std::unordered_map<std::string, char> getReverseTable() {
+                return reverseTable;
+            }
+
     };
 }
 

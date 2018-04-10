@@ -12,19 +12,20 @@
 using namespace WHTMIC023;
 using std::shared_ptr;
 using std::make_shared;
+using std::move;
 using std::cout;
 using std::endl;
 
 HuffmanNode::HuffmanNode(char c, int i) { // default constructor
-        letter = c;
-        freq = i;
+    letter = c;
+    freq = i;
 }
 
 HuffmanNode::HuffmanNode(const HuffmanNode& l, const HuffmanNode& r) { // parent constructor
     letter = '\0';
     freq = l.freq + r.freq;
-    left = make_shared<HuffmanNode>(l);
-    right = make_shared<HuffmanNode>(r); 
+    left = make_shared<HuffmanNode>(move(l));
+    right = make_shared<HuffmanNode>(move(r)); 
 }
 
 HuffmanNode::HuffmanNode(const HuffmanNode & rhs) { // copy constructor

@@ -8,14 +8,12 @@
  */
 
 #include "huffman.h"
-#include <vector>
 
 using namespace WHTMIC023;
 
 using std::string;
 using std::endl;
 using std::cout;
-using std::vector;
 
 void HuffmanTranscoder::encode(string inputFile, string outputFile) { // write out the encoded file as well as a header file which contains the code table
     buildCodeTable(inputFile);
@@ -134,6 +132,8 @@ void HuffmanTranscoder::bitEncode(string inputFile, string outputFile) {
     }
     out.close();
 
+    cout << "Compressed file!" << endl << endl;
+    cout << "Compression Details..." << endl;
     cout << "Uncompressed text length: " << std::to_string(charCount * 8) << " bits, packed into " << std::to_string(charCount) << " bytes." << endl;
     cout << "Compressed text length: " << std::to_string(input.length()) << " bits, packed into " << std::to_string(size) << " bytes." << endl;
     cout << "Compression ratio: " << std::to_string(compression) << endl;
@@ -149,12 +149,13 @@ void HuffmanTranscoder::bitDecode(string encodedFile, string outputFile) {
     int numBytes = numBits / 8;
     if (numBits % 8 > 0)
         numBytes++;
-    cout << "Number of bits to read: " << std::to_string(numBits) << endl;
+    cout << endl << "Number of bits to read: " << std::to_string(numBits) << endl;
     cout << "Number of bytes to read: " << std::to_string(numBytes) << endl;
     char input [numBytes];
 
     in.read(input, numBytes);
     in.close();
+    cout << "Read encoded file into buffer." << endl;
 
     // unpack bits
     string output = "";
@@ -180,10 +181,10 @@ void HuffmanTranscoder::bitDecode(string encodedFile, string outputFile) {
             }
             bitsRead++;
         }
-        cout << reverseTable[current] << ": " << current << endl;
         output += reverseTable[current];
         current = "";
     }
+    cout << "Decoded the file!" << endl;
 
     // write decoded file
     std::ofstream out = std::ofstream(outputFile);
@@ -191,12 +192,14 @@ void HuffmanTranscoder::bitDecode(string encodedFile, string outputFile) {
         out << output[i];
     }
 
+    cout << "Wrote decoded file to output!" << endl;
     out.close();
 }
 
 void HuffmanTranscoder::buildCodeTable(string input) { // creates a code table by building a huffman tree and then recursively traversing the tree, generating bitstrings
     HuffmanTree t = HuffmanTree(input);
     buildCodeTable(*t.root, "");
+    cout << "Built code table from Huffman Tree!" << endl;
 }
 
 void HuffmanTranscoder::buildCodeTable(HuffmanNode n, string bitstring) { // recursively called to traverse the huffman tree
@@ -231,4 +234,5 @@ void HuffmanTranscoder::ImportCodeTable(string filename) { // builds the code ta
         }
     }
     in.close();
+    cout << "Imported code table from header file!" << endl;
 }

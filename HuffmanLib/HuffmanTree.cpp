@@ -69,8 +69,8 @@ void HuffmanTree::buildTree() {
     }
 
     // assign the last node to the root
-    root = make_shared<HuffmanNode>(nodes.top());
-    std::cout << "Built the tree!" << std::endl;
+    root = make_shared<HuffmanNode>(std::move(nodes.top()));
+    std::cout << "Built Huffman Tree!" << std::endl;
 }
 
 HuffmanTree::HuffmanTree(string filepath) { // default constructor
@@ -88,5 +88,5 @@ HuffmanTree::HuffmanTree(string filepath) { // default constructor
 
 HuffmanTree::~HuffmanTree() { // destructor
     root = nullptr;
-    std::cout << "Destroying tree." << std::endl;
+    std::cout << "Destroying tree..." << std::endl;
 }
