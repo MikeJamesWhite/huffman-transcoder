@@ -61,11 +61,19 @@ namespace WHTMIC023 {
         public:
             std::shared_ptr<HuffmanNode> root;
 
-            HuffmanTree(std::string filepath);
+            HuffmanTree(std::string filepath); // constructor
 
-            ~HuffmanTree();
+            ~HuffmanTree(); // destructor
 
-            std::unordered_map<char, int> getFrequencies () {
+            HuffmanTree(const HuffmanTree & rhs); // copy constructor
+
+            HuffmanTree(HuffmanTree && rhs); // move constructor
+
+            HuffmanTree & operator=(const HuffmanTree & rhs); // copy assignment operator
+
+            HuffmanTree & operator=(HuffmanTree && rhs); // move assignment operator
+
+            const std::unordered_map<char, int> getFrequencies () {
                 return frequencies;
             }
     };

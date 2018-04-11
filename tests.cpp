@@ -178,25 +178,34 @@ TEST_CASE("Huffman Tree special member functions operate as expected", "[huffman
     }
 
     SECTION("Copy Constructor") {
-        
-
-    }
-
-    SECTION("Move Constructor") {
-
-
+        HuffmanTree t2(t);
+        REQUIRE(t2.root.get() == t.root.get());
     }
 
     SECTION("Copy Assignment Operator") {
+        HuffmanTree t2 = t;
+        REQUIRE(t2.root.get() == t.root.get());
+    }
 
+    SECTION("Move Constructor") {
+        HuffmanNode* r = t.root.get();
 
+        HuffmanTree t2(move(t));
+        REQUIRE(t2.root.get() == r);
+
+        REQUIRE(t.root == nullptr);
+        REQUIRE(t.getFrequencies().empty());
     }
 
     SECTION("Move Assignment Operator") {
+        HuffmanNode* r = t.root.get();
 
-
+        HuffmanTree t2 = move(t);
+        REQUIRE(t2.root.get() == r);
+    
+        REQUIRE(t.root == nullptr);
+        REQUIRE(t.getFrequencies().empty());
     }
-
 }
 
 // HUFFMAN TRANSCODER TESTING -> INCLUDES TESTING OF EXTENSION TASK (BITSTREAM OPERATIONS) 
